@@ -1,0 +1,17 @@
+{
+    "name": "socket.io-redis"
+  , "version": "0.1.0-pre"
+  , "description": "Redis Store for Socket.IO"
+  , "keywords": ["socket.io", "store", "redis"]
+  , "author": "Daniel D. Shaw <dshaw@dshaw.com>"
+  , "repository":{
+        "type": "git"
+      , "url": "https://github.com/dshaw/Socket.IO-redis.git"
+    }
+  , "dependencies": {
+        "socket.io": ">= 0.7.0"
+      , "redis": ">= 0.5.11"
+    }
+  , "main": "index"
+  , "engines": { "node": ">= 0.4.0" }
+}
