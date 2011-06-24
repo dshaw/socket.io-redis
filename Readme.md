@@ -11,8 +11,8 @@ In order to make this viable, I am working on patching Socket.IO. That code can 
 Setup
 ----------------
 
-  `cd ../Socket.IO-redis`
-  `npm install`
+    `cd Socket.IO-redis`
+    `npm install`
 
 Run the Examples
 ----------------
