@@ -153,266 +153,266 @@ module.exports = {
 //    });
 //  },
 
-  'test that responding to a heartbeat maintains session': function (done) {
-    var port = ++ports
-      , cl = client(port)
-      , io = create(cl)
-      , heartbeats = 0;
+//  'test that responding to a heartbeat maintains session': function (done) {
+//    var port = ++ports
+//      , cl = client(port)
+//      , io = create(cl)
+//      , heartbeats = 0;
+//
+//    io.configure(function () {
+//      io.set('heartbeat interval', .05);
+//      io.set('heartbeat timeout', .05);
+//      io.set('close timeout', 0);
+//    });
+//
+//    io.sockets.on('connection', function (socket) {
+//      socket.on('disconnect', function (reason) {
+//        heartbeats.should.eql(2);
+//        reason.should.eql('heartbeat timeout');
+//
+//        cl.end();
+//        io.server.close();
+//        done();
+//      });
+//    });
+//
+//    cl.handshake(function (sid) {
+//      cl.data('/socket.io/{protocol}/htmlfile/' + sid, function (msgs, i) {
+//        switch (i) {
+//          case 1:
+//            msgs.should.have.length(1);
+//            msgs[0].type.should.eql('connect');
+//            msgs[0].endpoint.should.eql('');
+//            break;
+//
+//          default:
+//            msgs.should.have.length(1);
+//            msgs[0].type.should.eql('heartbeat');
+//
+//            heartbeats++;
+//
+//            if (heartbeats == 1) {
+//              cl.post('/socket.io/{protocol}/htmlfile/' + sid, parser.encodePacket({
+//                type: 'heartbeat'
+//              }));
+//            }
+//        }
+//      });
+//    });
+//  },
 
-    io.configure(function () {
-      io.set('heartbeat interval', .05);
-      io.set('heartbeat timeout', .05);
-      io.set('close timeout', 0);
-    });
+//  'test sending undeliverable volatile messages': function (done) {
+//    var port = ++ports
+//      , cl = client(port)
+//      , io = create(cl)
+//      , messaged = false
+//      , s;
+//
+//    io.configure(function () {
+//      io.set('close timeout', 0);
+//    });
+//
+//    io.sockets.on('connection', function (socket) {
+//      s = socket;
+//
+//      socket.on('disconnect', function () {
+//        messaged.should.be.false;
+//        io.server.close();
+//        done();
+//      });
+//    });
+//
+//    cl.handshake(function (sid) {
+//      cl.data('/socket.io/{protocol}/htmlfile/' + sid, function () { });
+//
+//      setTimeout(function () {
+//        cl.end();
+//
+//        setTimeout(function () {
+//          s.volatile.send('wooooot');
+//          cl = client(port);
+//          cl.data('/socket.io/{protocol}/htmlfile/' + sid, function (msgs) {
+//            if (msgs && msgs.length)
+//              messaged = true;
+//          });
+//
+//          setTimeout(function () {
+//            cl.end();
+//          }, 20);
+//        }, 20);
+//      }, 20);
+//    });
+//  },
+//
+//  'test sending undeliverable volatile json': function (done) {
+//    var port = ++ports
+//      , cl = client(port)
+//      , io = create(cl)
+//      , messaged = false
+//      , s;
+//
+//    io.configure(function () {
+//      io.set('close timeout', 0);
+//    });
+//
+//    io.sockets.on('connection', function (socket) {
+//      s = socket;
+//
+//      socket.on('disconnect', function () {
+//        messaged.should.be.false;
+//        io.server.close();
+//        done();
+//      });
+//    });
+//
+//    cl.handshake(function (sid) {
+//      cl.data('/socket.io/{protocol}/htmlfile/' + sid, function () { });
+//
+//      setTimeout(function () {
+//        cl.end();
+//
+//        setTimeout(function () {
+//          s.volatile.json.send(123);
+//
+//          cl = client(port);
+//          cl.data('/socket.io/{protocol}/htmlfile/' + sid, function (msgs) {
+//            if (msgs && msgs.length)
+//              messaged = true;
+//          });
+//
+//          setTimeout(function () {
+//            cl.end();
+//          }, 20);
+//        }, 20);
+//      }, 20);
+//    });
+//  },
+//
+//  'test sending undeliverable volatile events': function (done) {
+//    var port = ++ports
+//      , cl = client(port)
+//      , io = create(cl)
+//      , messaged = false
+//      , s;
+//
+//    io.configure(function () {
+//      io.set('close timeout', 0);
+//    });
+//
+//    io.sockets.on('connection', function (socket) {
+//      s = socket;
+//
+//      socket.on('disconnect', function () {
+//        messaged.should.be.false;
+//        io.server.close();
+//        done();
+//      });
+//    });
+//
+//    cl.handshake(function (sid) {
+//      cl.data('/socket.io/{protocol}/htmlfile/' + sid, function () { });
+//
+//      setTimeout(function () {
+//        cl.end();
+//
+//        setTimeout(function () {
+//          s.volatile.emit('tobi');
+//
+//          cl = client(port);
+//          cl.data('/socket.io/{protocol}/htmlfile/' + sid, function (msgs) {
+//            if (msgs && msgs.length)
+//              messaged = true;
+//          });
+//
+//          setTimeout(function () {
+//            cl.end();
+//          }, 20);
+//        }, 20);
+//      }, 20);
+//    });
+//  },
 
-    io.sockets.on('connection', function (socket) {
-      socket.on('disconnect', function (reason) {
-        heartbeats.should.eql(2);
-        reason.should.eql('heartbeat timeout');
-
-        cl.end();
-        io.server.close();
-        done();
-      });
-    });
-
-    cl.handshake(function (sid) {
-      cl.data('/socket.io/{protocol}/htmlfile/' + sid, function (msgs, i) {
-        switch (i) {
-          case 1:
-            msgs.should.have.length(1);
-            msgs[0].type.should.eql('connect');
-            msgs[0].endpoint.should.eql('');
-            break;
-
-          default:
-            msgs.should.have.length(1);
-            msgs[0].type.should.eql('heartbeat');
-
-            heartbeats++;
-
-            if (heartbeats == 1) {
-              cl.post('/socket.io/{protocol}/htmlfile/' + sid, parser.encodePacket({
-                type: 'heartbeat'
-              }));
-            }
-        }
-      });
-    });
-  },
-
-  'test sending undeliverable volatile messages': function (done) {
-    var port = ++ports
-      , cl = client(port)
-      , io = create(cl)
-      , messaged = false
-      , s;
-
-    io.configure(function () {
-      io.set('close timeout', 0);
-    });
-
-    io.sockets.on('connection', function (socket) {
-      s = socket;
-
-      socket.on('disconnect', function () {
-        messaged.should.be.false;
-        io.server.close();
-        done();
-      });
-    });
-
-    cl.handshake(function (sid) {
-      cl.data('/socket.io/{protocol}/htmlfile/' + sid, function () { });
-
-      setTimeout(function () {
-        cl.end();
-
-        setTimeout(function () {
-          s.volatile.send('wooooot');
-          cl = client(port);
-          cl.data('/socket.io/{protocol}/htmlfile/' + sid, function (msgs) {
-            if (msgs && msgs.length)
-              messaged = true;
-          });
-
-          setTimeout(function () {
-            cl.end();
-          }, 20);
-        }, 20);
-      }, 20);
-    });
-  },
-
-  'test sending undeliverable volatile json': function (done) {
-    var port = ++ports
-      , cl = client(port)
-      , io = create(cl)
-      , messaged = false
-      , s;
-
-    io.configure(function () {
-      io.set('close timeout', 0);
-    });
-
-    io.sockets.on('connection', function (socket) {
-      s = socket;
-
-      socket.on('disconnect', function () {
-        messaged.should.be.false;
-        io.server.close();
-        done();
-      });
-    });
-
-    cl.handshake(function (sid) {
-      cl.data('/socket.io/{protocol}/htmlfile/' + sid, function () { });
-
-      setTimeout(function () {
-        cl.end();
-
-        setTimeout(function () {
-          s.volatile.json.send(123);
-
-          cl = client(port);
-          cl.data('/socket.io/{protocol}/htmlfile/' + sid, function (msgs) {
-            if (msgs && msgs.length)
-              messaged = true;
-          });
-
-          setTimeout(function () {
-            cl.end();
-          }, 20);
-        }, 20);
-      }, 20);
-    });
-  },
-
-  'test sending undeliverable volatile events': function (done) {
-    var port = ++ports
-      , cl = client(port)
-      , io = create(cl)
-      , messaged = false
-      , s;
-
-    io.configure(function () {
-      io.set('close timeout', 0);
-    });
-
-    io.sockets.on('connection', function (socket) {
-      s = socket;
-
-      socket.on('disconnect', function () {
-        messaged.should.be.false;
-        io.server.close();
-        done();
-      });
-    });
-
-    cl.handshake(function (sid) {
-      cl.data('/socket.io/{protocol}/htmlfile/' + sid, function () { });
-
-      setTimeout(function () {
-        cl.end();
-
-        setTimeout(function () {
-          s.volatile.emit('tobi');
-
-          cl = client(port);
-          cl.data('/socket.io/{protocol}/htmlfile/' + sid, function (msgs) {
-            if (msgs && msgs.length)
-              messaged = true;
-          });
-
-          setTimeout(function () {
-            cl.end();
-          }, 20);
-        }, 20);
-      }, 20);
-    });
-  },
-
-  'test sending deliverable volatile messages': function (done) {
-    var port = ++ports
-      , cl = client(port)
-      , io = create(cl)
-      , messaged = false;
-
-    io.configure(function () {
-      io.set('close timeout', 0);
-    });
-
-    io.sockets.on('connection', function (socket) {
-      socket.volatile.send('woot');
-
-      socket.on('disconnect', function () {
-        io.server.close();
-        done();
-      });
-    });
-
-    cl.handshake(function (sid) {
-      cl.data('/socket.io/{protocol}/htmlfile/' + sid, function (msgs, i) {
-        switch (i) {
-          case 1:
-            msgs.should.have.length(1);
-            msgs[0].type.should.eql('connect');
-            msgs[0].endpoint.should.eql('');
-            break;
-
-          case 2:
-            msgs.should.have.length(1);
-            msgs[0].should.eql({
-                type: 'message'
-              , data: 'woot'
-              , endpoint: ''
-            });
-            cl.end();
-        }
-      });
-    });
-  },
-
-  'test sending deliverable volatile json': function (done) {
-    var port = ++ports
-      , cl = client(port)
-      , io = create(cl)
-      , messaged = false;
-
-    io.configure(function () {
-      io.set('close timeout', 0);
-    });
-
-    io.sockets.on('connection', function (socket) {
-      socket.volatile.json.send(['woot']);
-
-      socket.on('disconnect', function () {
-        io.server.close();
-        done();
-      });
-    });
-
-    cl.handshake(function (sid) {
-      cl.data('/socket.io/{protocol}/htmlfile/' + sid, function (msgs, i) {
-        switch (i) {
-          case 1:
-            msgs.should.have.length(1);
-            msgs[0].type.should.eql('connect');
-            msgs[0].endpoint.should.eql('');
-            break;
-
-          case 2:
-            msgs.should.have.length(1);
-            msgs[0].should.eql({
-                type: 'json'
-              , data: ['woot']
-              , endpoint: ''
-            });
-            cl.end();
-        }
-      });
-    });
-  },
+//  'test sending deliverable volatile messages': function (done) {
+//    var port = ++ports
+//      , cl = client(port)
+//      , io = create(cl)
+//      , messaged = false;
+//
+//    io.configure(function () {
+//      io.set('close timeout', 0);
+//    });
+//
+//    io.sockets.on('connection', function (socket) {
+//      socket.volatile.send('woot');
+//
+//      socket.on('disconnect', function () {
+//        io.server.close();
+//        done();
+//      });
+//    });
+//
+//    cl.handshake(function (sid) {
+//      cl.data('/socket.io/{protocol}/htmlfile/' + sid, function (msgs, i) {
+//        switch (i) {
+//          case 1:
+//            msgs.should.have.length(1);
+//            msgs[0].type.should.eql('connect');
+//            msgs[0].endpoint.should.eql('');
+//            break;
+//
+//          case 2:
+//            msgs.should.have.length(1);
+//            msgs[0].should.eql({
+//                type: 'message'
+//              , data: 'woot'
+//              , endpoint: ''
+//            });
+//            cl.end();
+//        }
+//      });
+//    });
+//  },
+//
+//  'test sending deliverable volatile json': function (done) {
+//    var port = ++ports
+//      , cl = client(port)
+//      , io = create(cl)
+//      , messaged = false;
+//
+//    io.configure(function () {
+//      io.set('close timeout', 0);
+//    });
+//
+//    io.sockets.on('connection', function (socket) {
+//      socket.volatile.json.send(['woot']);
+//
+//      socket.on('disconnect', function () {
+//        io.server.close();
+//        done();
+//      });
+//    });
+//
+//    cl.handshake(function (sid) {
+//      cl.data('/socket.io/{protocol}/htmlfile/' + sid, function (msgs, i) {
+//        switch (i) {
+//          case 1:
+//            msgs.should.have.length(1);
+//            msgs[0].type.should.eql('connect');
+//            msgs[0].endpoint.should.eql('');
+//            break;
+//
+//          case 2:
+//            msgs.should.have.length(1);
+//            msgs[0].should.eql({
+//                type: 'json'
+//              , data: ['woot']
+//              , endpoint: ''
+//            });
+//            cl.end();
+//        }
+//      });
+//    });
+//  },
 
   'test sending deliverable volatile events': function (done) {
     var port = ++ports
@@ -425,7 +425,9 @@ module.exports = {
     });
 
     io.sockets.on('connection', function (socket) {
-      socket.volatile.emit('aaa');
+      console.log('connnected!!!!! Attempting to volitile emit.');
+//      socket.volatile.emit('aaa');
+      socket.emit('aaa');
 
       socket.on('disconnect', function () {
         io.server.close();
@@ -434,7 +436,10 @@ module.exports = {
     });
 
     cl.handshake(function (sid) {
+      console.error('client sid', sid);
+      cl.end();
       cl.data('/socket.io/{protocol}/htmlfile/' + sid, function (msgs, i) {
+        console.log('~~~~~~~~~ messages', msgs, i);
         switch (i) {
           case 1:
             msgs.should.have.length(1);
@@ -450,6 +455,7 @@ module.exports = {
               , endpoint: ''
               , args: []
             });
+            console.log('^^^^^^^^ Client attempting to disconnect.');
             cl.end();
         }
       });
