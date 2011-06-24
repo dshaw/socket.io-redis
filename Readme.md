@@ -8,7 +8,22 @@ Redis Implementation of Socket.IO Store
 In order to make this viable, I am working on patching Socket.IO. That code can be found in my fork: [/dshaw/Socket.IO-node](https://github.com/dshaw/Socket.IO-node/tree/extern/). Forks and contributions are welcome.
 
 
-Testing
---------
+Setup
+----------------
+
+  `cd ../Socket.IO-redis`
+  `npm install`
+
+Run the Examples
+----------------
+
+    `node examples/simple.js`
+    `redis-cli`
+    `> monitor`
+    open http://localhost:8124
+
+Run the Tests
+----------------
 
     `npm test`
+
