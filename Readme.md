@@ -11,19 +11,26 @@ In order to make this viable, I am working on patching Socket.IO. That code can 
 Setup
 ----------------
 
-    `cd Socket.IO-redis`
-    `npm install`
+```bash
+cd Socket.IO-redis
+npm install
+```
 
 Run the Examples
 ----------------
 
-    `node examples/simple.js`
-    `redis-cli`
-    `> monitor`
-    open http://localhost:8124
+```bash
+redis-server
+redis-cli
+> monitor
+node examples/simple.js
+```
+
+open [http://localhost:8124](http://localhost:8124)
 
 Run the Tests
 ----------------
 
-    `npm test`
-
+```bash
+npm test
+```
