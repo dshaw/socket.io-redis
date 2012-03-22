@@ -1,12 +1,23 @@
 Redis Implementation of Socket.IO Store
 =======================================
 
-  ![](http://f.cl.ly/items/1F3V1Z3u422O3p1P0X0k/really.gif)
+# STATUS: Deprecated. No longer under development.
 
-&lt;blink&gt; _This Storage/Dispatch engine for Socket.IO is under active development. It is not ready for production._ &lt;/blink&gt;
+We now have a [RedisStore](https://github.com/LearnBoost/socket.io/blob/master/lib/socket.io.js#L122-128) in Socket.io core. Please use that instead.
 
-In order to make this viable, I am working on patching Socket.IO. That code can be found in my fork: [/dshaw/Socket.IO-node](https://github.com/dshaw/Socket.IO-node/tree/extern/). Forks and contributions are welcome.
+I'm leaving this up for historical reference and because I think there are some fundamentally better approaches in the way this version of a Redis-based Socket.io Store was designed to handle sessions. However, to make this compatible with Socket.io core would take another major internal architectural re-write of core.
 
+## More Socket.io goodness
+
+If you like [Socket.io RedisStore](https://github.com/LearnBoost/socket.io/blob/master/lib/stores/redis.js), you might also be interested in my other Socket.io modules:
+
+* [socket.io-announce](https://github.com/dshaw/socket.io-announce) - Lightweight infrastructure broadcasting for use with Socket.io RedisStore.
+* [socket.io-zero](https://github.com/dshaw/socket.io-zero) - ZeroMQ dispatch with Redis distributed persistance Socket.io Store. 
+
+
+--------------------------------
+
+#socket.io-redis
 
 Setup
 ----------------
